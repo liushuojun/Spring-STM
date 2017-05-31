@@ -1,0 +1,817 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>User Management</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<div data-th-replace="fragments/sb-admin :: common-head"></div>
+<link type="text/css" rel="stylesheet"
+	href="../../../resources/lib/css/bootstrap-datetimepicker.min.css"
+	data-th-href="@{/resources/lib/css/bootstrap-datetimepicker.min.css}" />
+<link type="text/css" rel="stylesheet"
+	href="../../../resources/app/css/ordernew.css"
+	data-th-href="@{/resources/app/css/ordernew.css}" />
+<link type="text/css" rel="stylesheet"
+	href="../../../resources/lib/css/bootstrap-tags.css"
+	data-th-href="@{/resources/lib/css/bootstrap-tags.css}" />
+
+<style>
+.no-border-on-me>thead>tr>th, .no-border-on-me>tbody>tr>th,
+	.no-border-on-me>tfoot>tr>th, .no-border-on-me>thead>tr>td,
+	.no-border-on-me>tbody>tr>td, .no-border-on-me>tfoot>tr>td {
+	border-top-style: none;
+	border-bottom-style: none;
+}
+</style>
+
+</head>
+<body>
+	<!-- Common header -->
+	<div data-th-replace="fragments/sb-admin :: top-nav"></div>
+
+	<div data-th-replace="fragments/sb-admin :: vert-nav"></div>
+
+	<div class="container" id="layout">
+
+		<div class="col-lg-3">
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">
+					<span class="glyphicon glyphicon-th-list"></span> Customer List
+				</div>
+				<div class="panel-body">
+					<div class="list-group" id="customer-list-group"></div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col-lg-9" id="SuggestedPanel-Layout">
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">
+					<span class="glyphicon glyphicon-th-list"></span> Suggested
+					computer List
+				</div>
+				<div class="panel-body">
+					<div class="list-group" id="customer-list-current">
+
+						<a href="#" class="list-group-item list-group-item-success"
+							id="current_customer_id">
+							<h4 class="list-group-item-heading" id="current_customer_name"></h4>
+
+							<p class="list-group-item-text" id="current_customer_industry"></p>
+							<p class="list-group-item-text" id="current_customer_targetprice"></p>
+							<div class="row">
+							 <div class = "col-lg-3 col-sm-3">
+								<button id="order-history-modal-btn" type="button"
+									class="btn btn-default btn-md" data-toggle="modal"
+									data-target="#order-history-modal">
+									<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+									<span>Previous orders</span>
+								</button>
+								</div>
+								<div class = "col-lg-3 col-sm-3">
+								<button id="order-add-modal-btn" type="button"
+									class="btn btn-default btn-md" data-toggle="modal"
+									data-target="#order-add-modal">
+									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									<span>New Order</span>
+								</button>
+								</div>
+							</div>
+						</a>
+
+					</div>
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#collapseOne" id="suggestedcomputer_1"
+										class="currentsuggestedcomputer">Suggested Computer #1</a> <b
+										id="suggestedcomputerdegree_1">Overall Matching Degree</b>
+								</h4>
+							</div>
+							<div id="collapseOne" class="panel-collapse collapse">
+								<div class="panel-body">
+
+
+									<div class="col-lg-4">
+										<div class="panel panel-default"></div>
+										<div class="panel-heading">
+											<span class="glyphicon glyphicon-th-list"></span> Computer
+											Information
+										</div>
+										<div class="panel-body">
+											<img src="/spring-STM/resources/app/img/T440s.png"
+												class="img-rounded" alt="Cinque Terre" width="204"
+												height="136"></img>
+											<h4 id="current_computer_series1"></h4>
+											<h6 id="current_computer_system1"></h6>
+											<h6 id="current_computer_display1"></h6>
+											<h6 id="current_computer_processor1"></h6>
+											<h6 id="current_computer_memory1"></h6>
+										</div>
+									</div>
+
+									<div class="col-lg-4">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<span class="glyphicon glyphicon-th-list"></span> Scores
+											</div>
+
+											<div class="panel-body">
+
+												<h6 class="progress-lable">Battery life</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-success"
+														role="progressbar" aria-valuenow="95" aria-valuemin="0"
+														aria-valuemax="100" style="width: 50%"></div>
+												</div>
+												<h6 class="progress-lable">Design</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-info"
+														role="progressbar" aria-valuenow="20" aria-valuemin="0"
+														aria-valuemax="100" style="width: 20%"></div>
+												</div>
+												<h6 class="progress-lable">Size and weight</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-warning"
+														role="progressbar" aria-valuenow="60" aria-valuemin="0"
+														aria-valuemax="100" style="width: 60%"></div>
+												</div>
+												<h6 class="progress-lable">Performance</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-danger"
+														role="progressbar" aria-valuenow="80" aria-valuemin="0"
+														aria-valuemax="100" style="width: 80%"></div>
+												</div>
+												<h6 class="progress-lable">Value for money</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-orange"
+														role="progressbar" aria-valuenow="80" aria-valuemin="0"
+														aria-valuemax="100" style="width: 80%"></div>
+												</div>
+												<h6 class="progress-lable">Overall rating</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-primary"
+														role="progressbar" aria-valuenow="80" aria-valuemin="0"
+														aria-valuemax="100" style="width: 80%"></div>
+												</div>
+												<h5 id="review-result-1">Scores 7.7 out of 10 based on
+													284 reviews</h5>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-4">
+										<div class="panel panel-default"></div>
+										<div class="panel-heading">
+											<span class="glyphicon glyphicon-th-list"></span> Usage
+										</div>
+										<div class="panel-body">
+											<div id="canvas-holder">
+												<canvas id="chart-area-1" height="100" width="100"
+													style="border: 1px"></canvas>
+											</div>
+										</div>
+									</div>
+									<button id="order-analysis-modal-btn" type="button"
+										class="btn btn-success btn-lg" data-toggle="modal"
+										data-target="#order-analysis-modal">
+										<span>View Analysis</span>
+									</button>
+
+								</div>
+
+
+
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#collapseTwo" id="suggestedcomputer_2"
+										class="currentsuggestedcomputer">Suggested Computer #2</a> <b
+										id="suggestedcomputerdegree_2">Overall Matching Degree</b>
+								</h4>
+							</div>
+							<div id="collapseTwo" class="panel-collapse collapse">
+								<div class="panel-body">
+
+									<div class="col-lg-4">
+										<div class="panel panel-default"></div>
+										<div class="panel-heading">
+											<span class="glyphicon glyphicon-th-list"></span> Computer
+											Information
+										</div>
+										<div class="panel-body">
+											<img src="/spring-STM/resources/app/img/T440s.png"
+												class="img-rounded" alt="Cinque Terre" width="204"
+												height="136"></img>
+											<h4 id="current_computer_series2"></h4>
+											<h6 id="current_computer_system2"></h6>
+											<h6 id="current_computer_display2"></h6>
+											<h6 id="current_computer_processor2"></h6>
+											<h6 id="current_computer_memory2"></h6>
+										</div>
+									</div>
+
+									<div class="col-lg-4">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<span class="glyphicon glyphicon-th-list"></span> Scores
+											</div>
+
+											<div class="panel-body">
+
+												<h6 class="progress-lable">Battery life</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-success"
+														role="progressbar" aria-valuenow="95" aria-valuemin="0"
+														aria-valuemax="100" style="width: 50%"></div>
+												</div>
+												<h6 class="progress-lable">Design</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-info"
+														role="progressbar" aria-valuenow="20" aria-valuemin="0"
+														aria-valuemax="100" style="width: 20%"></div>
+												</div>
+												<h6 class="progress-lable">Size and weight</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-warning"
+														role="progressbar" aria-valuenow="60" aria-valuemin="0"
+														aria-valuemax="100" style="width: 60%"></div>
+												</div>
+												<h6 class="progress-lable">Performance</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-danger"
+														role="progressbar" aria-valuenow="80" aria-valuemin="0"
+														aria-valuemax="100" style="width: 80%"></div>
+												</div>
+												<h6 class="progress-lable">Value for money</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-orange"
+														role="progressbar" aria-valuenow="80" aria-valuemin="0"
+														aria-valuemax="100" style="width: 80%"></div>
+												</div>
+												<h6 class="progress-lable">Overall rating</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-primary"
+														role="progressbar" aria-valuenow="80" aria-valuemin="0"
+														aria-valuemax="100" style="width: 80%"></div>
+												</div>
+												<h5 id="review-result-2">Scores 7.7 out of 10 based on
+													284 reviews</h5>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-4">
+										<div class="panel panel-default"></div>
+										<div class="panel-heading">
+											<span class="glyphicon glyphicon-th-list"></span> Usage
+										</div>
+										<div class="panel-body">
+											<div id="canvas-holder">
+												<canvas id="chart-area-2" height="100" width="100"
+													style="border: 1px"></canvas>
+											</div>
+										</div>
+									</div>
+									<button id="order-analysis-modal-btn" type="button"
+										class="btn btn-success btn-lg" data-toggle="modal"
+										data-target="#order-analysis-modal">
+										<span>View Analysis</span>
+									</button>
+
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#collapseThree" id="suggestedcomputer_3">Suggested
+										Computer #3</a> <b id="suggestedcomputerdegree_3">Overall
+										Matching Degree</b>
+								</h4>
+							</div>
+							<div id="collapseThree" class="panel-collapse collapse">
+								<div class="panel-body">
+
+									<div class="col-lg-4">
+										<div class="panel panel-default"></div>
+										<div class="panel-heading">
+											<span class="glyphicon glyphicon-th-list"></span> Computer
+											Information
+										</div>
+										<div class="panel-body">
+											<img src="/spring-STM/resources/app/img/T440s.png"
+												class="img-rounded" alt="Cinque Terre" width="204"
+												height="136"></img>
+											<h4 id="current_computer_series3"></h4>
+											<h6 id="current_computer_system3"></h6>
+											<h6 id="current_computer_display3"></h6>
+											<h6 id="current_computer_processor3"></h6>
+											<h6 id="current_computer_memory3"></h6>
+										</div>
+									</div>
+
+									<div class="col-lg-4">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<span class="glyphicon glyphicon-th-list"></span> Scores
+											</div>
+
+											<div class="panel-body">
+
+												<h6 class="progress-lable">Battery life</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-success"
+														role="progressbar" aria-valuenow="95" aria-valuemin="0"
+														aria-valuemax="100" style="width: 50%"></div>
+												</div>
+												<h6 class="progress-lable">Design</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-info"
+														role="progressbar" aria-valuenow="20" aria-valuemin="0"
+														aria-valuemax="100" style="width: 20%"></div>
+												</div>
+												<h6 class="progress-lable">Size and weight</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-warning"
+														role="progressbar" aria-valuenow="60" aria-valuemin="0"
+														aria-valuemax="100" style="width: 60%"></div>
+												</div>
+												<h6 class="progress-lable">Performance</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-danger"
+														role="progressbar" aria-valuenow="80" aria-valuemin="0"
+														aria-valuemax="100" style="width: 80%"></div>
+												</div>
+												<h6 class="progress-lable">Value for money</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-orange"
+														role="progressbar" aria-valuenow="80" aria-valuemin="0"
+														aria-valuemax="100" style="width: 80%"></div>
+												</div>
+												<h6 class="progress-lable">Overall rating</h6>
+												<div class="progress">
+													<div class="progress-bar progress-bar-primary"
+														role="progressbar" aria-valuenow="80" aria-valuemin="0"
+														aria-valuemax="100" style="width: 80%"></div>
+												</div>
+												<h5 id="review-result-3">Scores 7.7 out of 10 based on
+													284 reviews</h5>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-4">
+										<div class="panel panel-default"></div>
+										<div class="panel-heading">
+											<span class="glyphicon glyphicon-th-list"></span> Usage
+										</div>
+										<div class="panel-body">
+											<div id="canvas-holder">
+												<canvas id="chart-area-3" height="100" width="100"
+													style="border: 1px"></canvas>
+											</div>
+										</div>
+									</div>
+									<button id="order-analysis-modal-btn" type="button"
+										class="btn btn-success btn-lg" data-toggle="modal"
+										data-target="#order-analysis-modal">
+										<span>View Analysis</span>
+									</button>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- div class="col-lg-8 col-sm-8 table-buttons"
+			th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_ADMIN') == false} ">
+			
+			<button id="order-add-modal-btn" type="button"
+				class="btn btn-default btn-md" data-toggle="modal"
+				data-target="#order-add-modal">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <span>Add</span>
+			</button>
+			<button id="order-edit-modal-btn" type="button"
+				class="btn btn-default btn-md" data-toggle="modal"
+				data-target="#order-add-modal" disabled="disabled">
+				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+				<span>Edit</span>
+			</button>
+			<button id="order-open-delete-modal-btn" type="button"
+				class="btn btn-default btn-md" data-toggle="modal"
+				data-target="#order-delete-modal" disabled="disabled">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <span>Delete</span>
+			</button>
+		</div -->
+
+		<!--  div class="col-lg-8 col-sm-8 table-buttons"
+			th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_ADMIN') == true} ">
+			
+			<button id="order-approval-modal-btn" type="button"
+				class="btn btn-default btn-md" data-toggle="modal"
+				data-target="#order-add-modal" disabled="disabled">
+				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+				<span>View and Approval</span>
+			</button>
+		</div -->
+
+		<div class="col-lg-8 col-sm-8">
+			<table id="search-price">
+				<tbody>
+					<tr>
+						<td><label> Minimum Price: </label></td>
+						<td><input type="text" id="min" name="min" /></td>
+						<td><label> Maximum Price: </label></td>
+						<td><input type="text" id="max" name="max" /></td>
+					</tr>
+				</tbody>
+
+			</table>
+			<table id="computer-table" class="table table-striped table-bordered">
+
+				<thead>
+				<tr>
+					<th class="child-details-control"></th>
+					<th>Name</th>
+					<th>Series</th>
+					<th>Processor</th>
+					<th>Memory</th>
+					<th>Display</th>
+					<th>Price</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+
+	<div class="modal fade" id="order-analysis-modal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" data-mode="add">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Data Analysis</h4>
+				</div>
+				<div class="modal-body">
+				    <label id ="currentcustomerindustry-modal"></label>
+					<div>
+						<canvas id="canvas_chart" style="height: 100%; width: 100%"></canvas>
+					</div>
+					<label id ="currentcustomertargetprice-modal"></label>
+					<div>
+						<div>
+							<canvas id="canvas_flow" style="height: 100%; width: 100%"></canvas>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						th:text="#{button.action.cancel}">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="modal fade" id="order-history-modal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" data-mode="add">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Previous Orders</h4>
+				</div>
+				<div class="modal-body">					
+						<div class="panel-group" id="previous-order-detail">
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						>OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	<div class="modal fade" id="order-add-modal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" data-mode="add">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Data Analysis</h4>
+				</div>
+				<div class="modal-body">
+				
+				<form id="order-form">
+						<!--  div class="form-group edit-form" id="order-id-form">
+							<label for="id">Order ID</label> <input name="id" type="text"
+								class="form-control" id="id" placeholder="Order ID" />
+						</div -->
+
+						<div class="form-group">
+							<label for="order-date">Date Created</label>
+							<div class="input-group date form_date" data-date=""
+								data-date-format="dd MM yyyy" data-link-field="dtp_input2"
+								data-link-format="yyyy-mm-dd">
+								<input name="builddate" type="text" class="form-control"
+									id="builddate" placeholder="Date Created" /> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-remove"></span></span> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6 col-sm-6">
+								<div class="form-group">
+									<label for="computer">Computer Name</label> <select
+										id="computer" class="form-control computer-selects"
+										name="computerId"><option
+											selected="selected" value="0">All</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-4 col-sm-4">
+								<div class="form-group">
+									<label for="number">Number</label> <input
+										name="number" type="text" class="form-control"
+										id="number" placeholder="Computer Number" />
+								</div>
+							</div>
+							<div class="col-lg-1 col-sm-1">
+							    <label>add</label>
+								<button type="button" class="btn btn-default addButton">
+									<i class="fa fa-plus"></i>
+								</button>
+							</div>
+						</div>
+						<div class="form-group hide" id="computernumbertemplate">
+							<div class="row">
+								<div class="col-lg-6 col-sm-6">
+									<div class="form-group">
+										<select id="computer" class="form-control computer-selects"
+											name="computerId"><option selected="selected"
+												value="0">All</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-4 col-sm-4">
+									<div class="form-group">
+										<input name="number" type="text" class="form-control"
+											id="number" placeholder="Computer Number" />
+									</div>
+								</div>
+								<div class="col-lg-1 col-sm-1">
+									<button type="button" class="btn btn-default removeButton">
+										<i class="fa fa-minus"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="form-group edit-form" id= "order-price-form">
+							<label for="price">Order Price</label> <input name="price"
+								type="text" class="form-control" id="price" placeholder="Price" />
+						</div>
+
+						<div class="form-group">
+							<label for="customer">Customer Name</label> <select
+								id="customer" class="form-control customer-selects"
+								name="customerId"><option selected="selected" value="0">All</option>
+							</select>
+						</div>
+						
+						<div class="form-group" th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_ADMIN')} ">
+							<label for="user">Responsible Staff</label> <select
+								id="user" class="form-control user-selects"
+								name="userId"><option selected="selected" value="0">All</option>
+							</select>
+						</div>
+						
+						<div class="form-group" th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_ADMIN')} ">
+							<label for="status">Order Status</label> <select
+								id="status" class="form-control status-selects"
+								name="statusId"><option selected="selected" value="0">All</option>
+							</select>
+						</div>
+						
+						<div class="form-group">
+							<label for="reason">Remarks</label> <input name="reason"
+								type="text" class="form-control" id="reason" placeholder="Remarks" />
+						</div>
+					</form>
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						th:text="#{button.action.cancel}">Cancel</button>
+					<button id="order-add-button" type="button" class="btn btn-primary"
+						th:text="#{button.action.save}">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="order-delete-modal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel"
+						th:text="#{order.delete.confirm.title}">Confirm delete
+						office</h4>
+				</div>
+				<div class="modal-body" th:text="#{order.delete.question.title}">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						th:text="#{button.action.cancel}">Cancel</button>
+					<button id="order-delete-button" type="button"
+						class="btn btn-primary" th:text="#{button.action.delete}">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="order-view-modal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" data-mode="view">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">View contact
+						details</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="leadname1">Name of Principals</label> <input
+							name="leadname1" type="text" class="form-control" id="leadname1"
+							placeholder="Name of Principals" />
+					</div>
+
+					<div class="form-group">
+							<label for="birthday1">Bithday of Principals</label> <input
+								name="birthday1" type="text" class="form-control" id="birthday1"
+								placeholder="Birthday of Principals" />
+					</div>
+
+					<div class="form-group">
+						<label for="habit1">Habit of Principals</label> <input
+							name="habit1" type="text" class="form-control" id="habit1"
+							placeholder="habit of Principals" />
+					</div>
+
+					<div class="form-group">
+						<label for="telephone1">Telephone of Principals</label> <input
+							name="telephone1" type="text" class="form-control" id="telephone1"
+							placeholder="telephone of Principals" />
+					</div>
+
+					<div class="form-group">
+						<label for="address1">Address of Principals</label> <input
+							name="address1" type="text" class="form-control" id="address1"
+							placeholder="address of Principals" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!--button type="button" class="btn btn-default" data-dismiss="modal"  th:text="#{button.action.cancel}">Cancel</button -->
+					<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="collapseTemplate" class="panel-collapse collapse">
+		<div class="panel-body">
+
+
+			<div class="col-lg-4">
+				<div class="panel panel-default"></div>
+				<div class="panel-heading">
+					<span class="glyphicon glyphicon-th-list"></span> Computer
+					Information
+				</div>
+				<div class="panel-body">
+					<img src="/spring-STM/resources/app/img/T440s.png"
+						class="img-rounded" alt="Cinque Terre" width="204" height="136"></img>
+					<h4 id="current_computer_series_template"></h4>
+					<h6 id="current_computer_system_template"></h6>
+					<h6 id="current_computer_display_template"></h6>
+					<h6 id="current_computer_processor_template"></h6>
+					<h6 id="current_computer_memory_template"></h6>
+				</div>
+			</div>
+
+			<div class="col-lg-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<span class="glyphicon glyphicon-th-list"></span> Scores
+					</div>
+
+					<div class="panel-body">
+
+						<h6 class="progress-lable">Battery life</h6>
+						<div class="progress">
+							<div class="progress-bar progress-bar-success" role="progressbar"
+								aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"
+								style="width: 50%"></div>
+						</div>
+						<h6 class="progress-lable">Design</h6>
+						<div class="progress">
+							<div class="progress-bar progress-bar-info" role="progressbar"
+								aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+								style="width: 20%"></div>
+						</div>
+						<h6 class="progress-lable">Size and weight</h6>
+						<div class="progress">
+							<div class="progress-bar progress-bar-warning" role="progressbar"
+								aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+								style="width: 60%"></div>
+						</div>
+						<h6 class="progress-lable">Performance</h6>
+						<div class="progress">
+							<div class="progress-bar progress-bar-danger" role="progressbar"
+								aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
+								style="width: 80%"></div>
+						</div>
+						<h6 class="progress-lable">Value for money</h6>
+						<div class="progress">
+							<div class="progress-bar progress-bar-orange" role="progressbar"
+								aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
+								style="width: 80%"></div>
+						</div>
+						<h6 class="progress-lable">Overall rating</h6>
+						<div class="progress">
+							<div class="progress-bar progress-bar-primary" role="progressbar"
+								aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
+								style="width: 80%"></div>
+						</div>
+						<h5 id="review-result-template">Scores 7.7 out of 10 based on 284
+							reviews</h5>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4">
+				<div class="panel panel-default"></div>
+				<div class="panel-heading">
+					<span class="glyphicon glyphicon-th-list"></span> Usage
+				</div>
+				<div class="panel-body">
+					<div id="canvas-holder-template">
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Common footer -->
+	<div th:replace="fragments/footer :: footer"></div>
+	<script src="../../resources/app/js/ordernew.js" type="text/javascript"
+		data-th-src="@{/resources/app/js/ordernew.js}"></script>
+	<script src="../../resources/lib/js/bootstrap-datetimepicker.js" type="text/javascript" data-th-src="@{/resources/lib/js/bootstrap-datetimepicker.js}"></script>
+	<script src="../../resources/lib/js/Chart.js" type="text/javascript" data-th-src="@{/resources/lib/js/Chart.js}"></script>
+	<script src="../../resources/lib/js/locales/bootstrap-datetimepicker.fr.js" type="text/javascript" data-th-src="@{/resources/lib/js/locales/bootstrap-datetimepicker.fr.js}"></script>
+	<script src="../../resources/lib/js/bootstrap-tags.js" type="text/javascript" data-th-src="@{/resources/lib/js/bootstrap-tags.js}"></script>
+</body>
+</html>

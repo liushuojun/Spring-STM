@@ -1,0 +1,56 @@
+#layout {
+	width: 1800px;
+	margin: 10px 40px 40px 230px;
+}
+
+#SuggestedPanel-Layout {
+	width: 1200px;
+	margin: 0px 0px 0px 0px;
+}
+.progress-lable{
+	float: left;
+    margin-right: 1em;S
+}
+.progress-bar-orange {
+      background-color: purple !important;
+}
+.progress {
+	width:200px;
+	margin-left: auto;
+}
+
+
+td.details-control {
+    background: url('http://datatables.net/examples/resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('http://datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
+
+#order-add-modal-btn {
+	margin: 0px 0px 0px 650px;
+    width: 150px;
+}
+
+#search-price {
+	margin:10px 10px 10px 550px;
+}
+
+.dataTables_filter {
+   width: 50%;
+   float: right;
+   text-align: right;
+}
+.customer-tags {
+	margin:0px 0px 0px 260px;
+}
+.computer-number, .computer-row, .computer-cell {
+    border: 1px solid #dff0d8;
+    border-collapse: collapse;
+}
+.computer-row, .computer-cell {
+    padding: 5px;
+    text-align: center;    
+}
+

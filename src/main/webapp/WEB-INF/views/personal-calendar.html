@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>User Management</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<div data-th-replace="fragments/sb-admin :: common-head"></div>
+<link rel='stylesheet' href="../../../resources/lib/css/cupertino/jquery-ui.min.css" data-th-href="@{/resources/lib/css/cupertino/jquery-ui.min.css}"/>
+<link rel='stylesheet' href='../../../resources/lib/css/fullcalendar.css' data-th-href="@{/resources/lib/css/fullcalendar.css}"/>
+<link href="../../../resources/lib/css/fullcalendar.print.css" data-th-href="@{/resources/lib/css/fullcalendar.print.css}" rel='stylesheet' media='print' />
+<link rel="stylesheet" href='../../../resources/app/css/calendar.css' data-th-href="@{/resources/app/css/calendar.css}"/>
+<link type="text/css" rel="stylesheet" href="../../../resources/lib/css/bootstrap-datetimepicker.min.css" data-th-href="@{/resources/lib/css/bootstrap-datetimepicker.min.css}" />
+
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+var base = /*[[@{/}]]*/ 'Sebastian';
+/*]]>*/
+</script>	
+</head>
+<body>
+	<!-- Common header -->
+	<div data-th-replace="fragments/sb-admin :: top-nav"></div>
+
+	<div data-th-replace="fragments/sb-admin :: vert-nav"></div>
+
+	<div class="row">
+		<div class="col-lg-8 col-sm-8">
+			<div id='calendar'></div>
+		</div>
+
+		<div class="col-lg-4 col-sm-4" th:if ="${#httpServletRequest.userPrincipal.toString().contains('ROLE_SALE')}">
+			<div class="panel panel-primary" id="calendarpanel">
+				<div class="panel-heading">
+					<h3 class="panel-title">Less Order Warning</h3>
+				</div>
+				<div class="panel-body" >Please click <a th:href="@{/customer?newcustomer=true}">here</a> to find new order using new customer</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="target-add-modal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" data-mode="add">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Add new target</h4>
+				</div>
+				<div class="modal-body">
+					<form id="target-form">
+						<div class="form-group" id="target-id-form">
+							<label for="id">ID</label> <input name="id" type="text"
+								class="form-control" id="id" placeholder="Target ID" />
+						</div>
+
+						<div class='row'>
+							<div class="col-lg-9 col-sm-9">
+								<div class="form-group">
+									<label for="target-title">Target Title</label> <input
+										name="title" type="text" class="form-control" id="title"
+										placeholder="Target Title" />
+								</div>
+							</div>
+							<div class="col-lg-3 col-sm-3" id="order-link" ><label for="order">View Details</label>
+								<a id = "view-order-link" class="btn btn-default btn-md" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>									
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label for="target-start">Start Date</label>
+							<div class="input-group date form_datetime" data-date=""
+								id="datetimepicker_start">
+								<input name="start" type="text" class="form-control" id="start"
+									placeholder="Start Date" /> <span class="input-group-addon"><span
+									class="glyphicon glyphicon-remove"></span></span> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-th"></span></span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="target-end">End Date</label>
+							<div class="input-group date form_datetime" data-date=""
+								id="datetimepicker_end">
+								<input name="end" type="text" class="form-control" id="end"
+									placeholder="End Date" /> <span class="input-group-addon"><span
+									class="glyphicon glyphicon-remove"></span></span> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-th"></span></span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="target-type">Target Details</label> <textarea
+								name="details" class="form-control" id="details" rows="2"
+								placeholder="Target Details" ></textarea>
+						</div>
+
+						<div class="form-group" id="user-select-form"
+							th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_ADMIN')}">
+							<label for="user">Responsible Staff</label> <select id="user"
+								class="form-control user-selects" name="userId"><option
+									selected="selected" value="0">All</option>
+							</select>
+						</div>
+
+						<div class="form-group"
+							th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_ADMIN')}" id = "feedback-form-id">
+							<label for="user">Manager's feedback</label> <textarea 
+								name="feedback" rows="3" class="form-control" id="feedback"
+								placeholder="Manager's feedback" ></textarea>
+						</div>
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						th:text="#{button.action.cancel}">Cancel</button>
+					<button id="target-add-button" type="button"
+						class="btn btn-primary" th:text="#{button.action.save}">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	<!-- Common footer -->
+	<div th:replace="fragments/footer :: footer"></div>
+	<script type="text/javascript" src='../../../resources/lib/js/moment.min.js' data-th-src="@{/resources/lib/js/moment.min.js}"></script>
+    <script type="text/javascript" src='../../../resources/lib/js/fullcalendar.min.js' data-th-src="@{/resources/lib/js/fullcalendar.min.js}"></script>
+    <script type="text/javascript" src='../../../resources/app/js/calendar.js' data-th-src="@{/resources/app/js/calendar.js}"></script>
+    <script src="../../resources/lib/js/bootstrap-datetimepicker.js" type="text/javascript" data-th-src="@{/resources/lib/js/bootstrap-datetimepicker.js}"></script>
+	<script src="../../resources/lib/js/locales/bootstrap-datetimepicker.fr.js" type="text/javascript" data-th-src="@{/resources/lib/js/locales/bootstrap-datetimepicker.fr.js}"></script>
+</body>
+</html>

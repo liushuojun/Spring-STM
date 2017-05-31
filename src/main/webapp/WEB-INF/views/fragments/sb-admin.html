@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head data-th-fragment="common-head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Core CSS - Include with every page -->
+<link type="text/css" rel="stylesheet"
+	href="../../../resources/lib/css/bootstrap-3.1.1.min.css"
+	data-th-href="@{/resources/lib/css/bootstrap-3.1.1.min.css}" />
+
+<link type="text/css" rel="stylesheet"
+	href="../../../resources/lib/font-awesome/css/font-awesome.css"
+	data-th-href="@{/resources/lib/font-awesome/css/font-awesome.css}" />
+
+<!-- SB Admin CSS - Include with every page -->
+<link type="text/css" rel="stylesheet"
+	href="../../../resources/lib/css/sb-admin.css"
+	data-th-href="@{/resources/lib/css/sb-admin.css}" />
+
+<link type="text/css" rel="stylesheet"
+	href="../../resources/lib/css/select2.min.css"
+	data-th-href="@{/resources/lib/css/select2.min.css}" />
+
+<link type="text/css" rel="stylesheet"
+	href="../../resources/lib/css/select2-bootstrap.min.css"
+	data-th-href="@{/resources/lib/css/select2-bootstrap.min.css}" />
+
+<link type="text/css" rel="stylesheet"
+	href="../../resources/app/css/computersales-common.css"
+	data-th-href="@{/resources/app/css/computersales-common.css}" />
+
+<style>
+.no-border-on-me>thead>tr>th, .no-border-on-me>tbody>tr>th,
+	.no-border-on-me>tfoot>tr>th, .no-border-on-me>thead>tr>td,
+	.no-border-on-me>tbody>tr>td, .no-border-on-me>tfoot>tr>td {
+	border-top-style: none;
+	border-bottom-style: none;
+}
+</style>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+	<div id="wrapper">
+
+		<nav data-th-fragment="top-nav"
+			class="navbar navbar-default navbar-static-top"
+			style="margin-bottom: 0">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#" data-th-href="@{/}">Computer
+					Sales System</a>
+			</div>
+			<!-- /.navbar-header -->
+
+			<ul class="nav navbar-top-links navbar-right"
+				data-th-with="currentUser=${#httpServletRequest.userPrincipal?.name}">
+				<li><a href="#" data-th-href="@{/calendar}">Home</a></li>
+				<li><a href="#" data-th-href="@{/order?orderId=0}">Order</a></li>
+				<li><a href="#" data-th-href="@{/neworder}" th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_SALE')}" >Build new order</a></li>
+				<li><a href="#" data-th-href="@{/neworder}"
+					th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_ADMIN')}">Admin</a></li>
+				<li><a href="#" data-th-href="@{/computerlistangular}"
+					th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_SERVICE')}">Aftersales</a></li>
+				<li class="dropdown" data-th-if="${currentUser != null}"><a
+					class="dropdown-toggle" data-toggle="dropdown" href="#"> <i
+						class="fa fa-user fa-fw"></i> <font color="#049cbd"
+						th:text="'&nbsp;' + ${currentUser} + '&nbsp;&nbsp;'">&nbsp;Dave&nbsp;&nbsp;</font>
+						<i class="fa fa-caret-down"></i>
+				</a>
+					<ul class="dropdown-menu dropdown-user">
+						<!-- li><a href="#"><i class="fa fa-user fa-fw"></i>User
+								Profile</a></li -->
+						<!-- li><a href="#"><i class="fa fa-gear fa-fw"></i>Settings</a></li>
+						<li class="divider"></li -->
+						<li>
+							<form class="navbar-form" data-th-action="@{/logout}"
+								method="post">
+								<label for="mySubmit" class="btn"><i
+									class="fa fa-sign-out fa-fw"></i>Log Out</label> <input id="mySubmit"
+									type="submit" value="Go" class="hidden" />
+							</form>
+						</li>
+					</ul> <!-- /.dropdown-user --></li>
+			</ul>
+			<!-- /.navbar-top-links -->
+		</nav>
+		<!-- /.navbar-static-top -->
+
+		<nav data-th-fragment="vert-nav"
+			class="navbar-default navbar-static-side">
+			<div class="sidebar-collapse">
+				<ul class="nav" id="side-menu">
+					<li
+						th:class="${(#httpServletRequest.requestURL.toString().contains('employee'))} or
+                                    ${(#httpServletRequest.requestURL.toString().contains('task'))} or
+                                    ${(#httpServletRequest.requestURL.toString().contains('permission'))} ? 'active'">
+						<a href="#" data-th-href="@{/user/list}"
+						th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_ADMIN')}"><i
+							class="fa fa-user fa-fw"></i> Employee Management<span
+							class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+							<li><a href="#" data-th-href="@{/user/list}">Employee
+									List</a></li>
+							<!--  li><a href="#" data-th-href="@{/computer/list}">Task
+									Allocation</a></li -->
+							<!--  li><a href="#" data-th-href="@{/permission/list}">Permission
+									List</a></li -->
+						</ul> <!-- /.nav-second-level -->
+					</li>
+					<li
+						th:class="${(#httpServletRequest.requestURL.toString().contains('product'))} ? 'active'">
+						<a href="#" data-th-href="@{/computer/list}"><i
+							class="fa fa-list fa-fw"></i> Product Management<span
+							class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+							<li><a href="#" data-th-href="@{/computer/list}">Computer
+									List</a></li>
+							<!-- li>
+                                <a href="#" data-th-href="@{/account-allocation/list}">Allocation List</a>
+                            </li -->
+						</ul> <!-- /.nav-second-level -->
+					</li>
+					<li
+						th:class="${(#httpServletRequest.requestURL.toString().contains('strategy'))} ? 'active'">
+						<a href="/strategy"><i class="fa fa-gears fa-fw"></i> Customer
+							Management<span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+							<!--li><a href="#" data-th-href="@{/strategy/list}">Strategy
+									List</a></li -->
+							<li><a href="#" data-th-href="@{/customer?newcustomer=false}">Customer
+									List</a></li>
+							<li><a href="#" data-th-href="@{/problem}"
+								th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_ADMIN')} or ${#httpServletRequest.userPrincipal.toString().contains('ROLE_SERVICE')}">Aftersales
+									Problem List</a></li>
+							<!--li>
+                                <a href="/strategy/account">Strategy Account</a>
+                            </li -->
+						</ul> <!-- /.nav-second-level -->
+					</li>
+					<li
+						th:class="${(#httpServletRequest.requestURL.toString().contains('order/orders'))} ? 'active'">
+						<a href="/trade/details"><i class="fa fa-tachometer fa-fw"></i>
+							Order Details<span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+							<li><a href="#" data-th-href="@{/order?orderId=0}">Orders</a></li>
+							<li><a href="#" data-th-href="@{/neworder}" th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_SERVICE')} or ${#httpServletRequest.userPrincipal.toString().contains('ROLE_SALE')}" >Build new order</a></li>
+							<li><a href="#" data-th-href="@{/approvalorder}"
+								th:if="${#httpServletRequest.userPrincipal.toString().contains('ROLE_ADMIN')} ">Awaiting
+									approval orders</a></li>
+							<!--li>
+                                <a href="#">Positions</a>
+                            </li>
+                            <li>
+                                <a href="#">Position Details</a>
+                            </li -->
+						</ul> <!-- /.nav-second-level -->
+					</li>
+					<li
+						th:class="${(#httpServletRequest.requestURL.toString().contains('summaries'))} ? 'active'">
+						<a href="#"><i class="fa fa-star-o fa-fw"></i> Personal
+							Calendar<span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+							<li><a href="#" data-th-href="@{/calendar}">My Calendar</a></li>
+						</ul> <!-- /.nav-second-level -->
+					</li>
+				</ul>
+				<!-- /#side-menu -->
+			</div>
+			<!-- /.sidebar-collapse -->
+		</nav>
+		<!-- /.navbar-static-side -->
+
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Blank</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script type="text/javascript"
+		src="../../../resources/js/jquery-1.11.0.min.js"
+		data-th-src="@{/resources/js/jquery-1.11.0.min.js}"></script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script type="text/javascript"
+		src="../../../resources/js/bootstrap-3.1.1.min.js"
+		data-th-src="@{/resources/js/bootstrap-3.1.1.min.js}"></script>
+
+	<!-- Core Scripts - Include with every page -->
+	<script type="text/javascript"
+		src="../../../resources/js/plugins/metisMenu/jquery.metisMenu.js"
+		data-th-src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+
+	<!-- SB Admin Scripts - Include with every page -->
+	<script type="text/javascript" src="../../../resources/js/sb-admin.js"
+		data-th-src="@{/resources/js/sb-admin.js}"></script>
+
+</body>
+</html>

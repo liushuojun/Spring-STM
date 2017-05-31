@@ -1,0 +1,105 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<div data-th-replace="fragments/sb-admin :: common-head"></div>
+
+<link type="text/css" rel="stylesheet"
+	href="../../../resources/app/css/order.css"
+	data-th-href="@{/resources/app/css/order.css}" />
+
+
+<style>
+.no-border-on-me>thead>tr>th, .no-border-on-me>tbody>tr>th,
+	.no-border-on-me>tfoot>tr>th, .no-border-on-me>thead>tr>td,
+	.no-border-on-me>tbody>tr>td, .no-border-on-me>tfoot>tr>td {
+	border-top-style: none;
+	border-bottom-style: none;
+}
+</style>
+<style>
+.dropdown-menu {
+	min-width: 0px;
+}
+</style>
+
+
+<title data-th-text="#{computer.list.page.title}">Title</title>
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<!-- /#wrapper -->
+
+		<div data-th-replace="fragments/sb-admin :: top-nav"></div>
+
+		<!-- div data-th-replace="fragments/sb-admin :: vert-nav"></div -->
+		<div ng-app="myApp">
+			<div class="" ng-controller="basicsCtrl">
+
+				<button type="button" ng-click="addRandomItem(row)" class="btn btn-sm btn-success">
+	         <i class="glyphicon glyphicon-plus">
+	         </i> Add random item
+        </button>
+
+				<table st-table="rowCollection" class="table table-striped">
+					<thead>
+						<tr>
+							<th>computer name</th>
+							<th>computer series</th>
+							<th>price</th>
+							<th>processor</th>
+							<th>system</th>
+							<th>memory</th>
+							<th>display</th>
+						</tr>
+						<tr>
+		        	<th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+	        	</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in rowCollection">
+							<td>{{row.computername}}</td>
+							<td>{{row.series}}</td>
+							<td>{{row.price}}</td>
+							<td>{{row.processor}}</td>
+							<td>{{row.system}}</td>
+							<td>{{row.memory}}</td>
+							<td>{{row.display}}</td>
+							<td>
+								<button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
+                  	<i class="glyphicon glyphicon-remove-circle">
+                  	</i>
+                </button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+		</div>
+	</div>
+
+	<div th:replace="fragments/footer :: footer"></div>
+	<script src="../../resources/lib/js/angular.min.js"
+		type="text/javascript"
+		data-th-src="@{/resources/lib/js/angular.min.js}"></script>
+	<script src="../../resources/lib/js/smart-table.js"
+		type="text/javascript"
+		data-th-src="@{/resources/lib/js/smart-table.js}"></script>
+	<script src="../../resources/lib/js/angular-resource.min.js"
+		type="text/javascript"
+		data-th-src="@{/resources/lib/js/angular-resource.min.js}"></script>
+	<script src="../../resources/app/js/computerangular.js"
+		type="text/javascript"
+		data-th-src="@{/resources/app/js/computerangular.js}"></script>
+
+</body>
+
+</html>

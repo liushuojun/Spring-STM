@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>User Management</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<div data-th-replace="fragments/sb-admin :: common-head"></div>
+<link type="text/css" rel="stylesheet"
+	href="../../../resources/lib/css/bootstrap-datetimepicker.min.css"
+	data-th-href="@{/resources/lib/css/bootstrap-datetimepicker.min.css}" />
+<link type="text/css" rel="stylesheet"
+	href="../../../resources/app/css/customer.css"
+	data-th-href="@{/resources/app/css/customer.css}" />
+
+<style>
+.no-border-on-me>thead>tr>th, .no-border-on-me>tbody>tr>th,
+	.no-border-on-me>tfoot>tr>th, .no-border-on-me>thead>tr>td,
+	.no-border-on-me>tbody>tr>td, .no-border-on-me>tfoot>tr>td {
+	border-top-style: none;
+	border-bottom-style: none;
+}
+</style>
+
+</head>
+<body>
+	<!-- Common header -->
+	<div data-th-replace="fragments/sb-admin :: top-nav"></div>
+
+	<div data-th-replace="fragments/sb-admin :: vert-nav"></div>
+	<div class="container" id="layout">
+		<div class="row">
+			<div class="col-lg-12 col-sm-12 table-buttons">
+				<!-- Buttons -->
+				<button id="customer-add-modal-btn" type="button"
+					class="btn btn-default btn-md" data-toggle="modal"
+					data-target="#customer-add-modal">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <span
+						th:text="#{button.label.add.customer}">Add</span>
+				</button>
+				<button id="customer-edit-modal-btn" type="button"
+					class="btn btn-default btn-md" data-toggle="modal"
+					data-target="#customer-add-modal" disabled="disabled">
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+					<span th:text="#{button.label.edit.customer}">Edit</span>
+				</button>
+				<button id="customer-open-delete-modal-btn" type="button"
+					class="btn btn-default btn-md" data-toggle="modal"
+					data-target="#customer-delete-modal" disabled="disabled">
+					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+					<span th:text="#{button.label.delete.customer}">Delete</span>
+				</button>
+			</div>
+			<div class="col-lg-12 col-sm-12">
+				<table id="customer-table"
+					class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th></th>
+							<th th:text="#{customer.list.name.label}">Customername</th>
+							<th th:text="#{customer.list.employee_num.label}">Employee_num</th>
+							<th th:text="#{customer.list.aftersales.label}">Level</th>
+							<th th:text="#{customer.list.industry.label}">Industry</th>
+							<th>Order Number</th>
+							<th>Interested Product</th>
+							<th>Target Price</th>
+							<th>Leadname</th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th>Operation</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="customer-add-modal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" data-mode="add">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Add new customer</h4>
+				</div>
+				<div class="modal-body">
+					<form id="customer-form" class="col-md-12">
+						<div class="row col-md-6">
+							<div class="form-group" id="customer-id-form">
+								<label for="id">Login ID</label> <input name="id" type="text"
+									class="form-control" id="id" placeholder="Customer ID" />
+							</div>
+							<div class="form-group">
+								<label for="customer-type">Customer Name</label> <input
+									name="customername" type="text" class="form-control"
+									id="customername" placeholder="Customer Name" />
+							</div>
+
+
+							<div class="form-group">
+								<label for="customer-name">Employee Number</label> <input
+									name="employee_num" type="text" class="form-control"
+									id="employee_num" placeholder="Employee Number" />
+							</div>
+
+							<div class="form-group">
+								<label for="ordernumber">Total Order Number</label> <input
+									name="ordernumber" type="text" class="form-control"
+									id="ordernumber" placeholder="Order Number" />
+							</div>
+
+
+							<div class="form-group">
+								<label for="level">Customer Level</label> <select id="level"
+									class="form-control level-selects" name="levelId"><option selected="selected"
+											value="0">All</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="industry"> Customer Industry</label> <select
+									id="industry" class="form-control industry-selects"
+									name="industryId"><option selected="selected"
+											value="0">All</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="computer"> Interested Computer</label> <select
+									id="computer" class="form-control computer-selects"
+									name="computerId"><option selected="selected"
+										value="0">All</option>
+								</select>
+							</div>
+
+						</div>
+						<div class= "row col-md-1">
+						</div>
+						<div class="row col-md-5">
+
+							<div class="form-group">
+								<label for="targetprice">Target Price</label> <input
+									name="targetprice" type="text" class="form-control"
+									id="targetprice" placeholder="Target Price" />
+							</div>
+
+							<div class="form-group">
+								<label for="leadname">Name of Principals</label> <input
+									name="leadname" type="text" class="form-control" id="leadname"
+									placeholder="Name of Principals" />
+							</div>
+
+							<div class="form-group">
+								<label for="birthday">Bithday of Principals</label>
+								<div class="input-group date form_date" data-date=""
+									data-date-format="dd MM yyyy" data-link-field="dtp_input2"
+									data-link-format="yyyy-mm-dd">
+									<input name="birthday" type="text" class="form-control"
+										id="birthday" placeholder="Birthday of Principals" /> <span
+										class="input-group-addon"><span
+										class="glyphicon glyphicon-remove"></span></span> <span
+										class="input-group-addon"><span
+										class="glyphicon glyphicon-calendar"></span></span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="habit">Habit of Principals</label> <input
+									name="habit" type="text" class="form-control" id="habit"
+									placeholder="habit of Principals" />
+							</div>
+
+							<div class="form-group">
+								<label for="telephone">Telephone of Principals</label> <input
+									name="telephone" type="text" class="form-control"
+									id="telephone" placeholder="telephone of Principals" />
+							</div>
+
+							<div class="form-group">
+								<label for="address">Address of Principals</label> <input
+									name="address" type="text" class="form-control" id="address"
+									placeholder="address of Principals" />
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						th:text="#{button.action.cancel}">Cancel</button>
+					<button id="customer-add-button" type="button"
+						class="btn btn-primary" th:text="#{button.action.save}">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="customer-delete-modal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel"
+						th:text="#{customer.delete.confirm.title}">Confirm delete
+						office</h4>
+				</div>
+				<div class="modal-body" th:text="#{customer.delete.question.title}">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						th:text="#{button.action.cancel}">Cancel</button>
+					<button id="customer-delete-button" type="button"
+						class="btn btn-primary" th:text="#{button.action.delete}">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="customer-view-modal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" data-mode="view">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">View contact
+						details</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="leadname1">Name of Principals</label> <input
+							name="leadname1" type="text" class="form-control" id="leadname1"
+							placeholder="Name of Principals" />
+					</div>
+
+					<div class="form-group">
+							<label for="birthday1">Bithday of Principals</label> <input
+								name="birthday1" type="text" class="form-control" id="birthday1"
+								placeholder="Birthday of Principals" />
+					</div>
+
+					<div class="form-group">
+						<label for="habit1">Habit of Principals</label> <input
+							name="habit1" type="text" class="form-control" id="habit1"
+							placeholder="habit of Principals" />
+					</div>
+
+					<div class="form-group">
+						<label for="telephone1">Telephone of Principals</label> <input
+							name="telephone1" type="text" class="form-control" id="telephone1"
+							placeholder="telephone of Principals" />
+					</div>
+
+					<div class="form-group">
+						<label for="address1">Address of Principals</label> <input
+							name="address1" type="text" class="form-control" id="address1"
+							placeholder="address of Principals" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!--button type="button" class="btn btn-default" data-dismiss="modal"  th:text="#{button.action.cancel}">Cancel</button -->
+					<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Common footer -->
+	<div th:replace="fragments/footer :: footer"></div>
+	<script src="../../resources/app/js/customer.js" type="text/javascript"
+		data-th-src="@{/resources/app/js/customer.js}"></script>
+	<script src="../../resources/lib/js/bootstrap-datetimepicker.js" type="text/javascript" data-th-src="@{/resources/lib/js/bootstrap-datetimepicker.js}"></script>
+	<script src="../../resources/lib/js/locales/bootstrap-datetimepicker.fr.js" type="text/javascript" data-th-src="@{/resources/lib/js/locales/bootstrap-datetimepicker.fr.js}"></script>
+</body>
+</html>
